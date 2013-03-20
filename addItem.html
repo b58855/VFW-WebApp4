@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    	<meta name="description" content="To do list"/>
+        <meta name="keywords" content=""/>
+        <meta name="robots" content="index, follow"/>
+        <meta name="viewport" content="user-scalable=no, width=device-width"/>
+        <meta name="viewport" content="target-densitydpi=device-dpi"/>
+        <meta name="HandheldFriendly" content="True"/>
+        <meta name="MobileOptimized" content="320"/>
+		<title>Add Item</title>
+		<link rel="stylesheet" href="css/styles.css" type="text/css"/>
+    	<meta charset="utf-8"/>
+	</head>
+	<body>
+    	<h1>Game Development:<br>To Do List</h1>
+    	<h2>Add Task</h2>
+        <form action="#" method="post" id="entryForm">
+        	<fieldset>
+            	<legend>Create New Task</legend>
+                <ol id="error"></ol>
+                <!--select the type of task to be done-->
+                <p id="select"><label for="category">Category:</label></p>
+                <!--what is the task?-->
+                <p><label for="task">Task:</label><input name="task" type="text" id="task" class="data"> </p>
+                <label for="task">Importance:</label>
+                <ul>
+                <!--tells us how important the task is-->
+                     <li class="import"><label for="mostImportant">Most Importance:</label><input name="importance" type="radio" value="Very" id="mostImportant" class="data"></li>
+                    <li class="import"><label for="important">Some Importance:</label><input name="importance" type="radio" value="Some" id="important" class="data"></li>
+                    <li class="import"><label for="leastMmportant">Little Importance:</label><input name="importance" type="radio" value="Little" id="leastImportant"></li>
+                </ul>
+                 <!--when does the task have to start by   --> 
+                <p><label for="startDate">Start Date:</label><input name="date" type="date" id="startDate"> </p>
+                 <!--when does the task have to end by-->
+                <p><label for="endDate">End Date:</label><input name="date" type="date" id="endDate"></p>
+                 <!--how many hours of work is expected for the task-->
+                <p><label for="hours">Hours of Work:</label><input name="hours" type="range" id="hours"></p>
+                 <!--long form description of the task-->
+                <p><label for="description">Description:</label><textarea name="description" cols="39" rows="5" id="description"></textarea></p>
+                <input name="submit" value="save" type="button" id="submit"> 
+            </fieldset> 
+        </form>
+        <input name="Hidden" type="hidden" value="True">
+        <a href="#" id="clearData">Clear List</a>
+        <a href="#" id="displayData">Display List</a>
+        <a href="addItem.html" id="addNew" style="display:none;">Add New Item</a>
+        <script type="text/javascript" src="js/main.js"></script>
+	</body>
+</html>
