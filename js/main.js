@@ -97,8 +97,8 @@ window.addEventListener("DOMContentLoaded", function(){
 		data.importance = ['Importance', importanceValue];
 		data.startDate = ['Start Date', $('startDate').value];
 		data.endDate = ['End Date', $('endDate').value];
-		data.HoursOfWork = ['Hours of Work', $('hours').value];
-		data.Description = ['Description', $('description').value];
+		data.hours = ['Hours', $('hours').value];
+		data.description = ['Description', $('description').value];
 		
 		//saves to local storage, converts object to string
 		localStorage.setItem(key, JSON.stringify(data));
@@ -114,10 +114,11 @@ window.addEventListener("DOMContentLoaded", function(){
 		addDiv.setAttribute('id', 'data');
 		if(localStorage.length === 0)
 		{
-			var addP = document.createElement('p');
+			/*var addP = document.createElement('p');
 			addDiv.appendChild(addP);
 			var pText = 'There are no list items.';
-			addP.innerHTML = pText;
+			addP.innerHTML = pText;*/
+			autoFill(); //change name
 		}
 		var addList = document.createElement('ul');
 		addDiv.appendChild(addList);
@@ -135,22 +136,46 @@ window.addEventListener("DOMContentLoaded", function(){
 			var addSubList = document.createElement('ol');
 			addSubList.className = 'listItem';
 			addItem.appendChild(addSubList);
+			findImage(addSubList, object.category[1]);
 			for(var j in object)
 			{
 				var addSubItem = document.createElement('li');
 				addSubList.appendChild(addSubItem);
-				var text = object[j][0]+": "+object[j][1];
+				var text = object[j][0]+': '+object[j][1];
 				addSubItem.innerHTML = text;
-				addSubItem.className = "subItem";			
+				addSubItem.className = 'subItem';			
 			}
 			addSubList.appendChild(editDeleteLi);
 			createEditDelete(localStorage.key(i), editDeleteLi);
 		}
 	}
 	
+	//finds the proper image for the category
+	function findImage(addSubList, imageName)
+	{
+		var imageItem = document.createElement('li');
+		addSubList.appendChild(imageItem);
+		var addImage = document.createElement('img');
+		var setSource = addImage.setAttribute('src', 'img/' + imageName + '.png');
+		addImage.className = 'subItem';
+		addImage.height = 50;
+		addImage.width = 50;
+		imageLi.appendChild(addImage);
+	}
+	
+	//populates data fields with genreic data
+	function autoFill()
+	{
+		for(var i in json)
+		{
+			var id = Math.floor(Math.random()*10000000000);
+			localStorage.setItem(id, JSON.stringify(json[i]));
+		}
+	}
+	
 	//creates the edit and delete options for each list item
 	function createEditDelete(key, linksLI)
-	{		
+	{	
 		var linkTexts = ['Edit', 'Delete'];
 		var linkIDs = ['edit', 'delete'];
 		var linkFunctions = [editItem, deleteItem];
@@ -181,23 +206,23 @@ window.addEventListener("DOMContentLoaded", function(){
 		var radios = document.forms[0].importance;
 		for(var i = 0; i < radios.length; i++)
 		{
-			if(radios[i].value == "Very" && data.importance[1] == "mostImportant")
+			if(radios[i].value == "Very" && data.importance[1] == "Very")
 			{
 				radios[i].setAttribute("checked", "checked");
 			}
-			if(radios[i].value == "Some" && data.importance[1] == "important")
+			if(radios[i].value == "Some" && data.importance[1] == "Some")
 			{
 				radios[i].setAttribute("checked", "checked");
 			}
-			if(radios[i].value == "Little" && data.importance[1] == "leastImportant")
+			if(radios[i].value == "Little" && data.importance[1] == "Little")
 			{
 				radios[i].setAttribute("checked", "checked");
 			}
 		}
 		$('startDate').value = data.startDate[1];
 		$('endDate').value = data.endDate[1];
-		$('hours').value = data.HoursOfWork[1];
-		$('description').value = data.Description[1];
+		$('hours').value = data.hours[1];
+		$('description').value = data.description[1];
 		
 		//remove save button
 		saveData.removeEventListener('click', validate);
@@ -206,6 +231,9 @@ window.addEventListener("DOMContentLoaded", function(){
 		var editSave = $('submit');
 		editSave.addEventListener('click', validate);
 		editSave.key = this.key;
+		
+		//removes old div with the id of data
+		$('data').remove();
 	}
 	
 	//deletes an item needs a name change
@@ -256,6 +284,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		else
 		{
 			saveToLocal(this.key);
+			//window.location.reload();
 		}
 	}
 	
